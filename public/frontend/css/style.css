@@ -1,6 +1,10 @@
 /********** Template CSS **********/
 :root {
+<<<<<<< HEAD
     --primary: #888e8c;
+=======
+    --primary: #00B074;
+>>>>>>> origin/main
     --secondary: #2B9BFF;
     --light: #EFFDF5;
     --dark: #2B3940;
@@ -233,7 +237,11 @@
 }
 
 .page-header {
+<<<<<<< HEAD
     background: linear-gradient(rgba(43, 57, 64, .5), rgba(43, 57, 64, .5)), url(../img/home1.jpeg) center center no-repeat;
+=======
+    background: linear-gradient(rgba(43, 57, 64, .5), rgba(43, 57, 64, .5)), url(../img/carousel-1.jpg) center center no-repeat;
+>>>>>>> origin/main
     background-size: cover;
 }
 
@@ -253,7 +261,11 @@
 }
 
 
+<<<<<<< HEAD
 /*** Category 
+=======
+/*** Category ***/
+>>>>>>> origin/main
 .cat-item {
     display: block;
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
@@ -265,7 +277,11 @@
     border-color: rgba(0, 0, 0, .08);
     box-shadow: none;
 }
+<<<<<<< HEAD
 ***/
+=======
+
+>>>>>>> origin/main
 
 /*** Job Listing ***/
 .nav-pills .nav-item .active {
@@ -367,7 +383,11 @@
 }
 
 .footer .form-control {
+<<<<<<< HEAD
     border-color: rgba(147, 151, 151, 0.5);
+=======
+    border-color: rgba(255,255,255,0.5);
+>>>>>>> origin/main
 }
 
 .footer .copyright {
@@ -390,6 +410,7 @@
     margin-right: 0;
     padding-right: 0;
     border-right: none;
+<<<<<<< HEAD
 }
 
 /*** Trending Keywords ***/
@@ -415,3 +436,6 @@
 }
 
 
+=======
+}
+>>>>>>> origin/main
