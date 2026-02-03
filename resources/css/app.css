@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.linkedin-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 45px;
+    height: 45px;
+    background: #0a66c2;
+    color: #fff;
+    border-radius: 50%;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.linkedin-icon:hover {
+    background: #084a94;
+}
+
+.gradient-bg {
+    background: linear-gradient(135deg, #7b2ff7, #9f7aea);
+}

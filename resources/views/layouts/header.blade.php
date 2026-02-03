@@ -1,42 +1,105 @@
-        <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-                <span class="sr-only">Loading...</span>
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{{ route('home') }}">JOBIFY</a>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navMenu">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('job_list') }}">Job Listings</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('aboutus') }}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
+            </ul>
+
+            <div class="ms-lg-3">
+                @guest
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle" type="button" id="guestDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            Account
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="guestDropdown">
+                            <li><a class="dropdown-item" href="{{ route('login') }}">Log In</a></li>
+                            <li><a class="dropdown-item" href="{{ route('register') }}">Register</a></li>
+                            <li><a class="dropdown-item" href="{{ route('jobs.index') }}">Browse Jobs</a></li>
+                        </ul>
+                    </div>
+                @endguest
+
+                @auth
+                    <div class="dropdown">
+                        <button class="btn btn-success dropdown-toggle d-flex align-items-center position-relative" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ Auth::user()->profile_photo ? asset('storage/' . Auth::user()->profile_photo) : asset('frontend/img/default-user.png') }}" 
+                                 alt="Profile" class="rounded-circle me-2" width="32" height="32">
+                            {{ Auth::user()->name }}
+                            <span class="badge bg-primary ms-2 text-capitalize">{{ Auth::user()->role }}</span>
+
+                            {{-- Notification Badge --}}
+                            @php
+                                $notifications = 0;
+                                if(Auth::user()->role === 'seeker'){
+                                    $notifications = Auth::user()->new_job_notifications ?? 0;
+                                } elseif(Auth::user()->role === 'employer'){
+                                    $notifications = Auth::user()->new_applications ?? 0;
+                                }
+                            @endphp
+                            @if($notifications > 0)
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    {{ $notifications }}
+                                    <span class="visually-hidden">unread messages</span>
+                                </span>
+                            @endif
+                        </button>
+
+                        {{-- Animated Dropdown --}}
+                        <ul class="dropdown-menu dropdown-menu-end animate-dropdown" aria-labelledby="userDropdown">
+                            @if(Auth::user()->role === 'admin')
+                                <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Admin Dashboard</a></li>
+                            @elseif(Auth::user()->role === 'employer')
+                                <li><a class="dropdown-item" href="{{ route('employer.dashboard') }}">
+                                    Employer Dashboard
+                                    @if($notifications > 0)
+                                        <span class="badge bg-danger ms-1">{{ $notifications }}</span>
+                                    @endif
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('jobs.create') }}">Post a Job</a></li>
+                            @elseif(Auth::user()->role === 'seeker')
+                                <li><a class="dropdown-item" href="{{ route('seeker.dashboard') }}">
+                                    Seeker Dashboard
+                                    @if($notifications > 0)
+                                        <span class="badge bg-danger ms-1">{{ $notifications }}</span>
+                                    @endif
+                                </a></li>
+                                <li><a class="dropdown-item" href="{{ route('jobs.index') }}">Apply for Job</a></li>
+                            @endif
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item text-danger">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                @endauth
             </div>
         </div>
-        <!-- Spinner End -->
+    </div>
+</nav>
 
+{{-- Smooth Dropdown Animation --}}
+<style>
+/* Fade & slide animation for dropdown */
+.animate-dropdown {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease-in-out;
+}
 
-        <!-- Navbar Start -->
-        <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-            <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
-                <h1 class="m-0 text-primary">JobEntry</h1>
-            </a>
-            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto p-4 p-lg-0">
-                    <a href="{{route('home')}}" class="nav-item nav-link active">Home</a>
-                    <a href="{{route('aboutus')}}" class="nav-item nav-link">About</a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Jobs</a>
-                        <div class="dropdown-menu rounded-0 m-0">
-                            <a href="{{route('job_list')}}" class="dropdown-item">Job List</a>
-                            <a href="{{route('job_details')}}" class="dropdown-item">Job Detail</a>
-                        </div>
-                    </div>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu rounded-0 m-0">
-                            <a href="{{route('category')}}" class="dropdown-item">Job Category</a>
-                            <a href="{{route('testimonials')}}" class="dropdown-item">Testimonial</a>
-                            <a href="{{route('home')}}" class="dropdown-item">404</a>
-                        </div>
-                    </div>
-                    <a href="{{route('contact')}}" class="nav-item nav-link">Contact</a>
-                </div>
-                <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Post A Job<i class="fa fa-arrow-right ms-3"></i></a>
-            </div>
-        </nav>
-        <!-- Navbar End -->
+.show.animate-dropdown {
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
