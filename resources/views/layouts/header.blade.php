@@ -1,4 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
     <div class="container">
         <a class="navbar-brand fw-bold" href="{{ route('home') }}">JOBIFY</a>
 
@@ -8,10 +9,42 @@
 
         <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('job_list') }}">Job Listings</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('aboutus') }}">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('contact') }}">Contact</a></li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+
+                <!-- Job Listings Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Job Listings
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">All Jobs</a></li>
+                        <li><a class="dropdown-item" href="#">Full Time Jobs</a></li>
+                        <li><a class="dropdown-item" href="#">Part Time Jobs</a></li>
+                        <li><a class="dropdown-item" href="#">Internships</a></li>
+                        <li><a class="dropdown-item" href="#">Remote Jobs</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Pages</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Blog</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contact</a>
+                </li>
+
             </ul>
 
             <div class="ms-lg-3">
