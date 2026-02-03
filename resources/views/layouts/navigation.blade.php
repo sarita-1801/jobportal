@@ -12,10 +12,32 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+
+                    {{-- COMMON --}}
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    {{-- EMPLOYER --}}
+                    @if(auth()->user()->role === 'employer')
+                        <x-nav-link :href="route('jobs.create')" :active="request()->routeIs('jobs.create')">
+                            {{ __('Post Job') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('employer.dashboard')" :active="request()->routeIs('employer.dashboard')">
+                            {{ __('Employer Dashboard') }}
+                        </x-nav-link>
+                    @endif
+
+                    {{-- JOB SEEKER --}}
+                    @if(auth()->user()->role === 'jobseeker')
+                        <x-nav-link :href="route('jobs.index')" :active="request()->routeIs('jobs.index')">
+                            {{ __('Apply Job') }}
+                        </x-nav-link>
+                    @endif
+
                 </div>
+
             </div>
 
             <!-- Settings Dropdown -->
@@ -66,11 +88,32 @@
 
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
+       <div class="pt-2 pb-3 space-y-1">
+            {{-- COMMON --}}
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+
+            {{-- EMPLOYER --}}
+            @if(auth()->user()->role === 'employer')
+                <x-responsive-nav-link :href="route('jobs.create')" :active="request()->routeIs('jobs.create')">
+                    {{ __('Post Job') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('employer.dashboard')" :active="request()->routeIs('employer.dashboard')">
+                    {{ __('Employer Dashboard') }}
+                </x-responsive-nav-link>
+            @endif
+
+            {{-- JOB SEEKER --}}
+            @if(auth()->user()->role === 'jobseeker')
+                <x-responsive-nav-link :href="route('jobs.index')" :active="request()->routeIs('jobs.index')">
+                    {{ __('Apply Job') }}
+                </x-responsive-nav-link>
+            @endif
+
         </div>
+
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
