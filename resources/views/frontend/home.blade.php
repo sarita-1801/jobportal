@@ -68,15 +68,13 @@
 <!-- JobBoard Site Stats Start -->
 <style>
     .jobboard-stats-container {
-        max-width: 1200px;
-        width: 100%;
-        background-color: rgb(93, 236, 112);
-        border-radius: 24px;
-        box-shadow: 0 20px 40px rgba(13, 2, 2, 0.08);
-        overflow: hidden;
-        padding: 40px;
-        margin: 80px auto;
-    }
+    max-width: 1200px;
+    width: 100%;
+    background-color: rgb(80, 243, 99);
+    overflow: hidden;
+    padding: 60px;
+    margin: 80px auto;
+}
     
     .stats-header {
         text-align: center;
@@ -88,7 +86,7 @@
     .stats-header h1 {
         font-size: 2.8rem;
         font-weight: 800;
-        color: #1a365d;
+        color: #09090a;
         margin-bottom: 20px;
         letter-spacing: -0.5px;
     }
@@ -96,7 +94,7 @@
     .stats-description {
         font-size: 1.1rem;
         line-height: 1.7;
-        color: #64748b;
+        color: #121213;
         max-width: 800px;
         margin: 0 auto;
     }
@@ -130,14 +128,14 @@
     
     .stat-card:hover {
         transform: translateY(-10px);
-        box-shadow: 0 15px 30px rgba(59, 130, 246, 0.15);
+        box-shadow: 0 15px 30px rgba(41, 41, 41, 0.15);
         border-color: #3b82f6;
     }
     
     .stat-number {
-        font-size: 3.5rem;
-        font-weight: 800;
-        color: #1e40af;
+        font-size: 2.6rem;
+        font-weight: 500;
+        color: #0d0d0e;
         margin-bottom: 10px;
         line-height: 1;
     }
