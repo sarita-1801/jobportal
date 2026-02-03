@@ -68,18 +68,6 @@
 <!-- JobBoard Site Stats Start -->
 <style>
     .jobboard-stats-container {
-        max-width: 1200px;
-        width: 100%;
-        background-color: rgb(93, 236, 112);
-        border-radius: 24px;
-        box-shadow: 0 20px 40px rgba(13, 2, 2, 0.08);
-        overflow: hidden;
-        padding: 40px;
-        margin: 80px auto;
-    }
-<!-- JobBoard Site Stats Start -->
-<style>
-    .jobboard-stats-container {
     max-width: 1200px;
     width: 100%;
     background-color: rgb(80, 243, 99);

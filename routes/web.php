@@ -4,10 +4,13 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EmployerController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JobController;
 use App\Http\Controllers\JobDetailsController;
 use App\Http\Controllers\JobListController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SeekerController;
 use App\Http\Controllers\TestimonialController;
 use Illuminate\Support\Facades\Route;
 
