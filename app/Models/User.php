@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -46,7 +47,7 @@ class User extends Authenticatable
         ];
     }
 
-    public function jobs()
+    public function jobs(): HasMany
     {
         return $this->hasMany(Job::class, 'employer_id');
     }
@@ -55,4 +56,5 @@ class User extends Authenticatable
     {
         return $this->hasMany(Application::class, 'seeker_id');
     }
+
 }

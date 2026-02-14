@@ -28,6 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+          if (!Auth::user()->is_active) {
+            Auth::logout();
+            return redirect()->route('login')
+                ->withErrors(['email' => 'Your account is blocked by admin']);
+        }
+
         if(Auth::user()->role == 'admin'){
             return redirect('/admin/dashboard');
         }
