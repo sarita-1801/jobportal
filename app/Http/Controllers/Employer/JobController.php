@@ -11,7 +11,7 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = Auth::user()->jobs()->latest()->get();
+        $jobs = Auth::user()->jobs()->latest()->paginate(5);
         return view('employer.jobs.index', compact('jobs'));
     }
 
@@ -20,18 +20,51 @@ class JobController extends Controller
         return view('employer.jobs.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreJobRequest $request)
     {
-        $request->validate([
-            'title'=>'required',
-            'company'=>'required',
-            'location'=>'required',
-            'job_type'=>'required',
-            'description'=>'required',
-        ]);
+        $data = $request->validated();
+        $data['is_active'] = $request->has('is_active');
 
-        Auth::user()->jobs()->create($request->all());
+        Auth::user()->jobs()->create($data);
 
-        return redirect()->route('employer.jobs.index')->with('success','Job Posted');
+        return redirect()
+            ->route('employer.jobs.index')
+            ->with('success', 'Job posted successfully.');
+    }
+
+    public function edit(Job $job)
+    {
+        $this->authorizeJob($job);
+        return view('employer.jobs.edit', compact('job'));
+    }
+
+    public function update(UpdateJobRequest $request, Job $job)
+    {
+        $this->authorizeJob($job);
+
+        $data = $request->validated();
+
+        $data['is_active'] = $request->has('is_active');
+
+        $job->update($data);
+
+        return redirect()
+            ->route('employer.jobs.index')
+            ->with('success', 'Job updated successfully.');
+    }
+
+    public function destroy(Job $job)
+    {
+        $this->authorizeJob($job);
+        $job->delete();
+
+        return back()->with('success', 'Job deleted successfully.');
+    }
+
+    private function authorizeJob(Job $job)
+    {
+        if ($job->employer_id !== Auth::id()) {
+            abort(403);
+        }
     }
 }

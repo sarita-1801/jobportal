@@ -22,6 +22,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -45,6 +46,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function redirectToDashboard()
+    {
+        return match($this->role) {
+            'admin' => route('admin.dashboard'),
+            'employer' => route('employer.dashboard'),
+            default => route('seeker.dashboard'),
+        };
     }
 
     public function jobs(): HasMany

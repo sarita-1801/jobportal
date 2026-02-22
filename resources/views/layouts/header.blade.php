@@ -1,5 +1,5 @@
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-dark shadow-sm">
+<nav class="navbar navbar-expand-lg navbar fixed-top bg-light shadow-sm">
     <div class="container">
 
         <a class="navbar-brand fw-bold" href="{{ route('home') }}">JOBIFY</a>
@@ -90,7 +90,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('jobs.create') }}">
+                                    <a class="dropdown-item" href="{{ route('employer.jobs.create') }}">
                                         Post a Job
                                     </a>
                                 </li>

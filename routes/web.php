@@ -80,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role:employer')->prefix('employer')->name('employer.')->group(function () {
 
         // Dashboard (controller-driven)
-        Route::get('/dashboard', [EmployerController::class, 'dashboard'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // Jobs Management
         Route::resource('jobs', EmployerJobController::class);

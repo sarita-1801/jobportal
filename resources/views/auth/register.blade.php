@@ -66,18 +66,6 @@
                     Already have an account?
                     <a href="{{ route('login') }}" class="text-blue-600 font-semibold">Login</a>
                 </p>
-
-                <!-- Divider -->
-                <div class="flex items-center gap-2 my-4">
-                    <hr class="flex-grow">
-                    <span class="text-sm text-gray-400">or connect with</span>
-                    <hr class="flex-grow">
-                </div>
-
-                <!-- LinkedIn -->
-                <div class="flex justify-center">
-                    <a href="#" class="w-10 h-10 flex items-center justify-center rounded-full bg-blue-700 text-white">in</a>
-                </div>
             </form>
         </div>
     </div>

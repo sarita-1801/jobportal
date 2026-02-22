@@ -6,6 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
+
+    protected $fillable = [
+        'title',
+        'company',
+        'location',
+        'job_type',
+        'salary',
+        'description',
+        'is_active',
+        'employer_id',
+    ];
+
+    protected $casts = [
+        'is_active' => 'boolean',
+    ];    
+    
     // Users who saved this job
     public function savedByUsers()
     {
@@ -16,5 +32,10 @@ class Job extends Model
     public function applications()
     {
         return $this->hasMany(Application::class);
+    }
+
+    public function employer()
+    {
+        return $this->belongsTo(User::class, 'employer_id');
     }
 }

@@ -47,11 +47,6 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        if(Auth::user()->role == 'employer'){
-            return redirect('/employer/dashboard');
-        }
-        else{
-            return redirect('/seeker/dashboard');
-        }
+        return redirect()->to($user->redirectToDashboard());
     }
 }
