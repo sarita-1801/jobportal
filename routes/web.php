@@ -27,7 +27,7 @@ use App\Http\Controllers\Admin\ApplicationController as AdminApplicationControll
 use App\Http\Controllers\Admin\EmployerController as AdminEmployerController;
 
 use App\Http\Controllers\Employer\JobController as EmployerJobController;
-
+use App\Http\Controllers\Seeker\DashboardController;
 use App\Http\Controllers\Seeker\JobController as SeekerJobController;
 
 /*
@@ -90,11 +90,14 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role:seeker')->prefix('seeker')->name('seeker.')->group(function () {
 
         // Dashboard
-        Route::get('/dashboard', [SeekerJobController::class, 'dashboard'])->name('dashboard');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         // Job Applications
         Route::get('jobs', [SeekerJobController::class, 'index'])->name('jobs.index');
         Route::post('jobs/{job}/apply', [SeekerJobController::class, 'apply'])->name('jobs.apply');
+
+        // Save / Unsave Job
+        Route::post('jobs/{job}/save', [JobController::class, 'toggleSave'])->name('jobs.save');
     });
 });
 require __DIR__.'/auth.php';
