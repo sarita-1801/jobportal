@@ -37,6 +37,33 @@ class ProfileController extends Controller
         return Redirect::route('profile.edit')->with('status', 'profile-updated');
     }
 
+    //Update avatar
+    public function updateAvatar(Request $request)
+    {
+        $request->validate([
+            'avatar' => 'required|image|mimes:jpg,jpeg,png|max:2048'
+        ]);
+
+        $user = Auth::user();
+
+        if ($request->hasFile('avatar')) {
+
+            // Delete old image
+            if ($user->profile_photo) {
+                \Storage::delete('public/avatars/' . $user->profile_photo);
+            }
+
+            $filename = time() . '.' . $request->avatar->extension();
+
+            $request->avatar->storeAs('public/avatars', $filename);
+
+            $user->profile_photo = $filename;
+            $user->save();
+        }
+
+        return back()->with('success', 'Profile picture updated!');
+    }
+
     /**
      * Delete the user's account.
      */

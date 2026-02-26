@@ -16,10 +16,12 @@ class Job extends Model
         'description',
         'is_active',
         'employer_id',
+        'status',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'status' => 'string',
     ];    
     
     // Users who saved this job
@@ -34,6 +36,7 @@ class Job extends Model
         return $this->hasMany(Application::class);
     }
 
+    //Employer relationships
     public function employer()
     {
         return $this->belongsTo(User::class, 'employer_id');

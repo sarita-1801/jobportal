@@ -57,20 +57,23 @@ class User extends Authenticatable
         };
     }
 
-    public function jobs(): HasMany
+    // Employer jobs
+    public function jobs()
     {
         return $this->hasMany(Job::class, 'employer_id');
     }
 
+    // Seeker applications
     public function applications()
     {
-        return $this->hasMany(Application::class, 'seeker_id');
+        return $this->hasMany(Application::class);
     }
 
-    // Jobs saved by this user
+    // Saved jobs (belongsToMany)
     public function savedJobs()
     {
-        return $this->belongsToMany(Job::class, 'saved_jobs', 'user_id', 'job_id');
+        return $this->belongsToMany(Job::class, 'saved_jobs', 'user_id', 'job_id')
+                    ->withTimestamps();
     }
 
 }

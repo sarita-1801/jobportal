@@ -11,7 +11,11 @@ class JobController extends Controller
 {
     public function index()
     {
-        $jobs = Auth::user()->jobs()->latest()->paginate(5);
+        $jobs = Auth::user()
+                    ->jobs()
+                    ->latest()
+                    ->paginate(5);
+
         return view('employer.jobs.index', compact('jobs'));
     }
 
@@ -20,16 +24,36 @@ class JobController extends Controller
         return view('employer.jobs.create');
     }
 
-    public function store(StoreJobRequest $request)
+    // public function store(StoreJobRequest $request)
+    // {
+    //     $data = $request->validated();
+    //     $data['is_active'] = $request->has('is_active');
+
+    //     Auth::user()->jobs()->create($data);
+
+    //     return redirect()
+    //         ->route('employer.jobs.index')
+    //         ->with('success', 'Job posted successfully.');
+    // }
+
+    public function store(Request $request)
     {
-        $data = $request->validated();
-        $data['is_active'] = $request->has('is_active');
+        $data = $request->validate([
+            'title' => 'required|string|max:255',
+            'company' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
+            'job_type' => 'required|string',
+            'salary' => 'nullable|numeric',
+            'description' => 'required|string',
+        ]);
 
-        Auth::user()->jobs()->create($data);
+        $data['employer_id'] = auth()->id();
+        $data['status'] = 'pending';
 
-        return redirect()
-            ->route('employer.jobs.index')
-            ->with('success', 'Job posted successfully.');
+        Job::create($data);
+
+        return redirect()->route('employer.jobs.index')
+            ->with('success', 'Job submitted for admin approval.');
     }
 
     public function edit(Job $job)
@@ -66,5 +90,23 @@ class JobController extends Controller
         if ($job->employer_id !== Auth::id()) {
             abort(403);
         }
+    }
+
+    public function applications(Job $job)
+    {
+        $applications = $job->applications()
+                            ->with('seeker')
+                            ->get();
+
+        return view('employer.jobs.applications', compact('applications'));
+    }
+
+    public function updateStatus(Request $request, Application $application)
+    {
+        $application->update([
+            'status' => $request->status
+        ]);
+
+        return back()->with('success', 'Status updated.');
     }
 }

@@ -50,4 +50,18 @@ class JobController extends Controller
         $job->delete();
         return redirect()->route('admin.jobs.index')->with('success','Job deleted');
     }
+
+    public function approve(Job $job)
+    {
+        $job->update(['status' => 'approved']);
+
+        return back()->with('success', 'Job approved successfully.');
+    }
+
+    public function reject(Job $job)
+    {
+        $job->update(['status' => 'rejected']);
+
+        return back()->with('error', 'Job rejected.');
+    }
 }

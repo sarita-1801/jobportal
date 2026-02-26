@@ -47,7 +47,7 @@
 
                 @guest
                     <div class="d-flex gap-2">
-                        <a href="{{ route('login') }}" class="btn btn-outline-light btn-sm">Login</a>
+                        <a href="{{ route('login') }}" class="btn btn-outline btn-sm">Login</a>
                         <a href="{{ route('register') }}" class="btn btn-success btn-sm">Register</a>
                     </div>
                 @endguest

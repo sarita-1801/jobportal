@@ -57,6 +57,9 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/', [ProfileController::class, 'destroy'])->name('destroy');
     });
 
+    Route::post('/profile/avatar', [ProfileController::class, 'updateAvatar'])->name('profile.avatar');
+    
+
     // ================= ADMIN =================
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
 
@@ -69,6 +72,16 @@ Route::middleware(['auth'])->group(function () {
         // Jobs
         Route::resource('jobs', AdminJobController::class);
 
+        // Approve Job
+        Route::patch('jobs/{job}/approve',
+            [AdminJobController::class, 'approve'])
+            ->name('jobs.approve');
+
+        // Reject Job
+        Route::patch('jobs/{job}/reject',
+            [AdminJobController::class, 'reject'])
+            ->name('jobs.reject');      
+
         // Applications (index, show, destroy only)
         Route::resource('applications', AdminApplicationController::class)->only(['index','show','destroy']);
 
@@ -80,10 +93,21 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('role:employer')->prefix('employer')->name('employer.')->group(function () {
 
         // Dashboard (controller-driven)
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/dashboard', [\App\Http\Controllers\Employer\DashboardController::class, 'index'])
+            ->name('dashboard');
 
         // Jobs Management
         Route::resource('jobs', EmployerJobController::class);
+       
+        // View applications for a specific job
+        Route::get('jobs/{job}/applications',
+            [EmployerJobController::class, 'applications'])
+            ->name('jobs.applications');
+
+        // Update application status
+        Route::patch('applications/{application}/status',
+            [\App\Http\Controllers\Employer\ApplicationController::class, 'updateStatus'])
+            ->name('applications.updateStatus');
     });
 
     // ================= SEEKER =================
@@ -97,7 +121,14 @@ Route::middleware(['auth'])->group(function () {
         Route::post('jobs/{job}/apply', [SeekerJobController::class, 'apply'])->name('jobs.apply');
 
         // Save / Unsave Job
-        Route::post('jobs/{job}/save', [JobController::class, 'toggleSave'])->name('jobs.save');
+        Route::match(['get', 'post'], 'jobs/{job}/save', [SeekerJobController::class, 'toggleSave'])->name('jobs.save');
+
+        //Applications
+        Route::get('applications', [SeekerJobController::class, 'applications'])
+        ->name('applications');
+
+        // Saved Jobs
+        Route::get('saved-jobs', [SeekerJobController::class, 'savedJobs'])->name('saved'); 
     });
 });
 require __DIR__.'/auth.php';
